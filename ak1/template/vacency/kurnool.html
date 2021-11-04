@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "./base.html" %}
+{% block content %}
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="shortcut icon" type="image/png" href="{% static 'logo.jpeg' %}"/>
+    <title>kurnool</title>
+</head>
+<body>
+    
+
+    <main class="mobile_view">
+        <div class="container ">
+            <h2 class="text-center">Today's update</h2>
+            <h4 class="text-center"><em>Total: {{kurnool|length}}</em></h4>
+            <h5>Data maybe delayed sometimes</h5>
+            {% for m in kurnool %}
+            <div class="container mt-5 border border-3 p-3 rounded-3 ">
+                <h5>{{m.Hospital}}</h5>
+                <div><span>Help Desk  : <span style="color: green;">{{m.HelpDeskNumber}}</span>
+                <a href="tel:8772287777"><i class="fas fa-phone"></i></a>
+                </span></div>
+                <div><span>Nodal Officer  : <span style="color: green;">{{m.NodalOfficerNumber}}</span>
+                    <a href="tel:7702091111"><i class="fas fa-phone"></i></a>
+                </span></div>
+                <div class="mt-3"><span class="rounded p-1" style="background-color:rgb(85, 84, 84);color:white">{{m.AarogyasriEmpanelmentstatus}}</span></div>
+                <div>
+                    <div class="mt-3 d-flex flex-row justify-content-around">
+                    <h6>ICU Available</h6>
+                    <h6>O2 General</h6>
+                    </div>
+                    <div class="mt-2 d-flex flex-row justify-content-around">
+                    <div class="rounded p-1 px-2 text-center" style="background-color: rgb(6, 197, 6);color:white;">{{m.ICUAvailable}}</div>
+                    <div class="rounded p-1 px-2 text-center" style="background-color: rgb(6, 197, 6);color:white;">{{m.O2Available}}</div>
+                    </div>
+                    <div class="mt-3 d-flex flex-row justify-content-around">
+                    <h6>General Beds</h6>
+                    <h6>Ventilator</h6>
+                    </div>
+                    <div class="mt-2 d-flex flex-row justify-content-around">
+                    <div class="rounded p-1 px-2 text-center" style="background-color: rgb(6, 197, 6);color:white;">{{m.GeneralAvailable}}</div>
+                    <div class="rounded p-1 px-2 text-center" style="background-color: rgb(201, 13, 0);color:white;">{{m.VentilatorAvailable}}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            
+
+        </div>
+    </main>
+
+    <main class="desktop_view">
+          <div class="innersearch">
+              <div>
+                <input placeholder="Enter search term" type="search" id="searchInput">
+              </div>
+            <div class="icon">
+              <i class="far fa-search"></i>
+            </div>
+          </div>
+        
+        
+        <div class="table-wrapper">
+          <table id="filterTable">
+            <thead>
+              <tr>
+                <th data-type="text">Hospital Name</th>
+                <th data-type="text">Help Desk <br>Number</th>
+                <th data-type="text">Nodal Officer <br> Number</th>
+                <th data-type="text">Aarogyasri <br>empanelment <br> status</th>
+                <th data-type="text">ICU Available</th>
+                <th data-type="text">O2 General <br>Beds Available</th>
+                <th data-type="number">General Beds <br>Available</th>
+                <th data-type="number">Ventilators <br>Available</th>
+              </tr>
+            </thead>
+            <tbody>
+                    
+                {% for m in kurnool[0:12] %}
+                <tr>
+                    <td>{{m.Hospital}}</td>
+                    <td>{{m.HelpDeskNumber}}</td>
+                    <td>{{m.NodalOfficerNumber}}</td>
+                    <td>{{m.AarogyasriEmpanelmentstatus}}</td>
+                    <td>{{m.ICUAvailable}}</td>
+                    <td>{{m.O2Available}}</td>
+                    <td>{{m.GeneralAvailable}}</td>
+                    <td>{{m.VentilatorAvailable}}</td>
+                </tr>
+                {% endfor %}
+            
+                {% for m in kurnool[12:] %}
+                        <tr class="hidden">
+                            <td>{{m.Hospital}}</td>
+                            <td>{{m.HelpDeskNumber}}</td>
+                            <td>{{m.NodalOfficerNumber}}</td>
+                            <td>{{m.AarogyasriEmpanelmentstatus}}</td>
+                            <td>{{m.ICUAvailable}}</td>
+							<td>{{m.O2Available}}</td>
+							<td>{{m.GeneralAvailable}}</td>
+							<td>{{m.VentilatorAvailable}}</td>
+                        </tr>
+                {% endfor %}
+                                
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+            <button class="backward" id="first">first</button>
+            <button class="backward" id="prev">previous</button>
+            <button class="forward" id="next">next</button>
+            <button class="forward" id="last">last</button>
+            <div class="page-numbers" id="pageNumbers"></div>
+          </div>
+      </main>
+
+<script src="index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
